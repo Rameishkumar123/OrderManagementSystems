@@ -1,0 +1,60 @@
+===================================================
+Order Management System — Instructions for Students
+====================================================
+
+Domain:
+-------
+E-commerce / Retail Systems
+
+Problem Description:
+--------------------
+Modern e-commerce platforms must handle thousands of customer orders daily. A reliable Order Management System (OMS) ensures that customers can place orders, products are tracked properly, totals are calculated, and reports are generated for business insights.
+
+In this project, you will design and implement a simplified version of an OMS that can:
+
+Create customers and products.
+
+Allow customers to place orders with multiple products.
+
+Update stock when products are purchased.
+
+Prevent invalid operations (e.g., ordering out-of-stock items).
+
+Track order statuses (Pending, Shipped, Delivered, Cancelled).
+
+Generate reports (order summary, customer history, sales report).
+
+Topics Covered in this Project:
+-------------------------------
+Python Basics : Variables, loops, conditionals, and inbuilt functions.
+
+Functions:Writing reusable functions with arguments (positional, keyword, default).
+
+Data Structures :Using lists, dicts, and sets for storing and managing products and orders.
+
+Object-Oriented Programming (OOP) : Designing classes (Product, Customer, Order).
+Using class relationships (e.g., a Customer has many Orders).
+Implementing methods like __str__.
+
+Error Handling : Using try/except/finally for safe execution.
+Raising and handling custom exceptions (OutOfStockError, InvalidOrderOperationError).
+
+Enums and Constants: Defining OrderStatus using Python’s Enum.
+
+Modular Code Structure : Splitting the project into multiple Python files (product.py, customer.py, order.py, etc.).
+
+Importing modules correctly and organizing business logic separately from data.
+
+Reporting : Generating summaries and reports using loops, f-strings, and formatted outputs
+
+Extra Work if completed on time :
+----------------------------------
+If your team finishes early, you can extend the project by:
+
+Adding order cancellation and refunds.
+
+Saving and loading data into/from a JSON file (utils.py).
+
+Implementing discounts or taxes on orders.
+
+Exporting reports to CSV/JSON for analytics.
