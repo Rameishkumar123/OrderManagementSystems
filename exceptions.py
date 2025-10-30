@@ -1,6 +1,5 @@
 """
 Custom exceptions for order management
-Hint: Use them when invalid operations happen
 """
 
 class OutOfStockError(Exception):
