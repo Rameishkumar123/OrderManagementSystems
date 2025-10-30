@@ -19,6 +19,10 @@ class ProductNotFoundError(Exception):
     """Raised when product is not found"""
     pass
 
+class ProductAlreadyExistsError(Exception):
+    """Raised when product is not found"""
+    pass
+
 class OrderNotFoundError(Exception):
     """Raised when product is not found"""
     pass
