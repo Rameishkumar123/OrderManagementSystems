@@ -8,7 +8,6 @@ Step-by-step Instructions:
    - email (str)
    - orders (list of Order objects)
 2. Add __init__, add_order, get_order_history methods.
-Hint: Use a list to store order references.
 """
 
 class Customer:
@@ -17,7 +16,6 @@ class Customer:
     """
     def __init__(self, customer_id, name, email):
         # TODO: Initialize attributes
-        # Hint: self.orders = []
         self.customer_id = customer_id
         self.name = name
         self.email = email
@@ -36,7 +34,6 @@ class Customer:
     """
     def get_order_history(self):
         # TODO: Return order details
-        # Hint: Loop through self.orders and return summaries
         if not self.orders:
             return f"Customer[{self.customer_id}] {self.name} ({self.email}), orders=No orders placed yet."
         #total = sum( q*p.price for p, q in self.orders.products.items())
