@@ -16,7 +16,6 @@ Step-by-step Instructions:
    h. Add stocks to products
    i. Exit
 4. Handle invalid input with try/except.
-Hint: Use while True loop with input() for menu.
 """
 
 from customer import Customer
@@ -33,7 +32,6 @@ def main():
     This Main will add customer,order,product.Give Reports also
     """
     # TODO: Implement menu-driven logic here
-    # Hint: Keep customers and orders in lists/dictionaries
     customers = {}
     products = {}
     orders = {}
