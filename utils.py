@@ -15,12 +15,29 @@ _id_counter = itertools.count(1)
 
 def validate_price(price):
     # TODO: Raise ValueError if price < 0
-    pass
+    try:
+        price = float(price)
+    except (TypeError,ValueError):
+        raise ValueError("Price must be a valid number")
+
+    if price < 0:
+        raise ValueError("Price cannot be negative.")
+    
+    return price
 
 def validate_quantity(qty):
     # TODO: Raise ValueError if qty <= 0
-    pass
+    try:
+        qty = int(qty)
+    except (TypeError,ValueError):
+        raise ValueError("Price must be a valid number")
 
+    if qty < 0:
+        raise ValueError("Price cannot be negative.")
+    
+    return qty
+    
+    
 def generate_id():
     # TODO: Return next id
     # Hint: return next(_id_counter)
