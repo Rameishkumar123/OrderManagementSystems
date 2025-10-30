@@ -21,33 +21,43 @@ class Customer:
         self.customer_id = customer_id
         self.name = name
         self.email = email
-        self.orders = []
+        self.orders = {}
 
     """
-    we are not using this method. we did directly by append on orders in main function
+    adding order to customer
     """
     def add_order(self, order):
         # TODO: Append order to list
-        # Hint: self.orders.append(order)
-        pass
+        self.orders[order.order_id] = order
+        #pass
 
     """
-    we are not using this method. we printing in main function
+    this method is used to get order history
     """
     def get_order_history(self):
         # TODO: Return order details
         # Hint: Loop through self.orders and return summaries
-        pass
+        if not self.orders:
+            return f"Customer[{self.customer_id}] {self.name} ({self.email}), orders=No orders placed yet."
+        #total = sum( q*p.price for p, q in self.orders.products.items())
+        total = sum( q*p.price for o in self.orders.values() for p, q in o.products.items())
+        print("total",total)
+        
+        orders_str = ', '.join([
+        f"Product Name:{p.name} - Price:{p.price} - Quantity:{qty}  - {o.status.name}"
+        for o in self.orders.values()
+        for p, qty in o.products.items()
+        ])
+        return f"Customer[{self.customer_id}] {self.name} ({self.email}), orders={orders_str}, total Cost= {total}"
+        
 
     def __str__(self):
         """
         this method is used to represent the Customer information
         """
-        # return (f"Customer[{self.customer_id}]  {self.name} {self.email}," 
-        #         f"orders={{{', '.join([f'{p.name} - {qty} - {o.status} ' for p,qty in o.products.items() for o in self.orders])}}} ")
         orders_str = ', '.join([
         f"Product Name:{p.name} - Price:{p.price} - Quantity:{qty}  - {o.status.name}"
-        for o in self.orders
+        for o in self.orders.values()
         for p, qty in o.products.items()
         ])
         return f"Customer[{self.customer_id}] {self.name} ({self.email}), orders={{ {orders_str} }}"
