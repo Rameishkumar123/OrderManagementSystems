@@ -25,7 +25,8 @@ from order import Order
 from report import Report
 from exceptions import *
 from order_status import OrderStatus
-#from exceptions import *
+from utils import *
+from report import *
 
 def main():
     """
@@ -43,15 +44,17 @@ def main():
         print("d. Add product to order")
         print("e. Remove product to order")
         print("f. View order summary")
-        print("g. Customer order history")
+        print("g. View Customer order summary")
         print("h. Add stocks to products")
         print("i. Update status to order")
-        print("j. Total for order")
-        print("k. View Product")
+        print("j. calculate Total for order")
+        print("k. View order summary")
         print("l. Exit")
+        #print("m. Exit")
         choice = input("Enter choice: ")
 
         if choice == "a": # Add Customers
+            print("Add Customers")
             cid = input("Customer ID: ")
             name = input("Name: ")
             email = input("Email: ")
@@ -61,16 +64,25 @@ def main():
             print("Customer added.")
 
         elif choice == "b": # Add products
-            pid = input("Product ID: ")
-            name = input("Name: ")
-            price = int(input("Price: "))
-            stock = int(input("Stock: "))
-            
-            product_object = Product(pid, name, price, stock)
-            products[pid] = product_object
-            print("product added.")    
+            try:
+                print("Add products")
+                pid = input("Product ID: ")
+                name = input("Name: ")
+                price = int(input("Price: "))
+                stock = int(input("Stock: "))
+                
+                if pid in products:
+                    raise ProductAlreadyExistsError("Product with this ID already exists.")
+                price = validate_price(price)
+                stock = validate_quantity(stock)
+                product_object = Product(pid, name, price, stock)
+                products[pid] = product_object
+                print("product added.")
+            except Exception as e:
+                print("Error: ",e)            
 
         elif choice == "c": # create an order
+            print("Create order")
             oid = input("Order ID: ")
             cid = input("Customer Id: ")
             
@@ -85,6 +97,7 @@ def main():
                 print("Error:", e)    
 
         elif choice == "d": # Add product to order
+            print("Add product to order")
             oid = input("Order ID: ")
             pid = input("Product Id: ")
             qty = input("quantity: ")
@@ -96,8 +109,11 @@ def main():
                     raise ProductNotFoundError("Product not found")
 
                 order = orders[oid]
+                customer = order.customer
+                
                 product = products[pid]
                 order.add_product(product,qty)   
+                customer.add_order(order)
                 product.remove_stock(int(qty))   
                 print("product added")         
                    
@@ -105,6 +121,7 @@ def main():
                 print("Error:", e) 
 
         elif choice == "e": # Remove product to order
+            print("Remove product to order")
             oid = input("Order ID: ")
             pid = input("Product Id: ")     
             try:
@@ -124,31 +141,40 @@ def main():
             except Exception as e:
                 print("Error:", e)
         
-        elif choice == "f": # View order summary
+        elif choice == "f": # View Particular order summary
+            print("for Particular Order summary")
             try:
+                oid = input("Order ID for order summary: ")
+                if oid not in orders:
+                    raise OrderNotFoundError("Order not found")
                 
-                
-                for oid,order in  orders.items():
-                    print(order)
-                
-                #print("order.products[product]",order.products[product])
-                print("Order list")   
+                order = orders[oid]
+                report = Report()
+                result = report.order_summary(order)
+                print("Order list")
+                print(result)
+                   
             except Exception as e:
                 print("Error:", e)
 
-        elif choice == "g": # View order summary
+        elif choice == "g": # View Customer order summary
             try:
+                print("for Customer order Summary")
+                cid = input("Customer Id: ")
+                if cid not in customers:
+                        raise CustomerNotFoundError("Customer not found")
                 
+                customer = customers[cid]
+                report = Report()
+                result = report.customer_orders(customer)
+                print("Customer order Summary")
+                print(result)
                 
-                for cid,customer in  customers.items():
-                    print(customer)
-                
-                #print("order.products[product]",order.products[product])
-                print("Customer list")   
             except Exception as e:
                 print("Error:", e)        
 
         elif choice == "h": # Add stocks to products
+            print("Add stocks to products")
             pid = input("Enter Product Id: ")
             qty = input("Enter New Stock Quantity: ")
             try:
@@ -162,6 +188,7 @@ def main():
                 print("Error:", e)
 
         elif choice == "i": # Update status to order
+            print("Update status to order")
             oid = input("Order ID: ")
             status = input("Order Status Pending/Shipped/Delivered/Cancelled: ")
             try:
@@ -178,8 +205,6 @@ def main():
                 elif status == 'Cancelled':
                     st= OrderStatus.CANCELLED            
                 order.update_status(st)
-                if status == 'Delivered':
-                    order.customer.orders.append(order)    
             except Exception as e:
                 print("Error:", e)                           
                     
@@ -200,14 +225,12 @@ def main():
             except Exception as e:
                 print("Error:", e)    
 
-        elif choice == "k": # View order summary
+        elif choice == "k": # View Total order summary
             try:
-                
-                
-                for pid,product in  products.items():
-                    print(product)
-                
-                #print("order.products[product]",order.products[product])
+                print("View Total order summary")
+                report = Report()
+                total_sales = report.sales_report(orders.values())
+                print(f"Total Sales: {total_sales}")
                 print("product list")   
             except Exception as e:
                 print("Error:", e)
